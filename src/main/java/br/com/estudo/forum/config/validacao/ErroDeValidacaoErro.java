@@ -1,4 +1,4 @@
-package br.com.estudo.forum.config;
+package br.com.estudo.forum.config.validacao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

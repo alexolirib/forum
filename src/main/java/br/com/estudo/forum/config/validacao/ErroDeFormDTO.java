@@ -1,4 +1,4 @@
-package br.com.estudo.forum.config;
+package br.com.estudo.forum.config.validacao;
 
 public class ErroDeFormDTO {
     private String campo;
