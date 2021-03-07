@@ -1,13 +1,19 @@
 package br.com.estudo.forum.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Resposta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mensagem;
+    @ManyToOne
     private Topico topico;
     private LocalDateTime dataCriacao =LocalDateTime.now();
+    @ManyToOne
     private Usuario autor;
     //quando cria uma resposta por defaut vai como não, até quando alguem definir como solucionado
     private Boolean solucao =false;
