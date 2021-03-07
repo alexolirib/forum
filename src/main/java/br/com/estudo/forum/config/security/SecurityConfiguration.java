@@ -55,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/topicos").permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+//                importante deixar privado
+                .antMatchers(HttpMethod.GET,"/actuator/**").permitAll()
                 //o resto precisa está autenticado
                 .anyRequest().authenticated()
                 //criar formulario de login (porém cria sessão )
