@@ -54,9 +54,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/topicos").permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
 //                importante deixar privado
                 .antMatchers(HttpMethod.GET,"/actuator/**").permitAll()
+                //configurar autorização por perfil
+                .antMatchers(HttpMethod.DELETE,"/topicos/*").hasRole("MODERADOR")
                 //o resto precisa está autenticado
                 .anyRequest().authenticated()
                 //criar formulario de login (porém cria sessão )
@@ -78,6 +81,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         //para swagger
         web.ignoring()
-                .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
+                .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**", "/**.ico");
     }
 }
