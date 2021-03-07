@@ -9,6 +9,11 @@ import br.com.estudo.forum.model.Topico;
 import br.com.estudo.forum.repository.CursoRepository;
 import br.com.estudo.forum.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,19 +38,50 @@ public class TopicoController {
     @Autowired
     private CursoRepository cursoRepository;
 
-//    @ResponseBody
+    //    @ResponseBody
     @GetMapping
     //parametro se for enviado parametro
-    public List<TopicoDTO> lista(String nomeCurso){
-        List<Topico> topicos;
-        if (nomeCurso == null) {
-            topicos = topicoRepository.findAll();
-        } else {
+    //para funcionar a paginação dessa forma foi necessario acrescentar
+    //EnableSpringDataWebSupport na classe que possui metodo main do spring
+    //para pegar de forma automatico é
+    //?page=&size=&sort=<field>,(asc or desc)
+    //(pode ter diversos sort)
+    //?page=0&size=3&sort=id,desc&sort=dataCriacao,asc
+    public Page<TopicoDTO> lista(@RequestParam(required = false) String nomeCurso,
+                                //valores padrão que por acaso não for enviado pelo cliente
+                                 @PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
 
-            topicos = topicoRepository.findByCurso_Nome(nomeCurso);
+        Page<Topico> topicos;
+        if (nomeCurso == null) {
+//            topicos = topicoRepository.findAll();
+            topicos = topicoRepository.findAll(paginacao);
+        } else {
+            topicos = topicoRepository.findByCurso_Nome(nomeCurso, paginacao);
         }
         return TopicoDTO.converter(topicos);
     }
+    //antiga forma para paginacao
+    //    @ResponseBody
+//    @GetMapping
+//    //parametro se for enviado parametro
+//    public Page<TopicoDTO> lista(@RequestParam(required = false) String nomeCurso,
+//                                 @RequestParam int pagina,
+//                                 @RequestParam int qtd,
+//                                 @RequestParam String ordenacao){
+//        Pageable paginacao = PageRequest.of(pagina,
+//                qtd,
+//                Sort.Direction.ASC,
+//                ordenacao);
+//
+//        Page<Topico> topicos;
+//        if (nomeCurso == null) {
+////            topicos = topicoRepository.findAll();
+//            topicos = topicoRepository.findAll(paginacao);
+//        } else {
+//            topicos = topicoRepository.findByCurso_Nome(nomeCurso, paginacao);
+//        }
+//        return TopicoDTO.converter(topicos);
+//    }
 
     @PostMapping
     //o @valid faz a validação de acordo com as validecions que foi definido

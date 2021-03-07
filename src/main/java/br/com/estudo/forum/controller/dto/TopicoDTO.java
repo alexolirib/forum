@@ -1,6 +1,7 @@
 package br.com.estudo.forum.controller.dto;
 
 import br.com.estudo.forum.model.Topico;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,9 +22,11 @@ public class TopicoDTO {
         this.dataCriacao = topico.getDataCriacao();
     }
 
-    public static List<TopicoDTO> converter(List<Topico> topicos) {
+    public static Page<TopicoDTO> converter(Page<Topico> topicos) {
         //fazendo um map de topico para topicoDTO (TopicoDTO::new é chamado o próprio construtor que recebe o topico
-        return topicos.stream().map(TopicoDTO::new ).collect(Collectors.toList());
+        //quando retornava List<TopicoDTO>
+//        return topicos.stream().map(TopicoDTO::new ).collect(Collectors.toList());
+        return topicos.map(TopicoDTO::new);
     }
 
     public Long getId() {
