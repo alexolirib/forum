@@ -11,3 +11,19 @@ docker build -t estudo/forum .
 docker image list
  - Para rodar o container
 docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE='prod' -e FORUM_DATABASE_URL='jdbc:h2:mem:estudo-forum-prod' -e FORUM_DATABASE_USERNAME='sa' -e FORUM_DATABASE_PASSWORD='' -e FORUM_JWT_SECRET='123456' estudo/forum
+
+
+PUSH NO HEROKU
+heroku container:login
+heroku create estudo-forum-alexolirib
+heroku git:remote -a estudo-forum-alexolirib
+(CONFIGURAR AS VARIAVEIS DE AMBIENTE NA APLICAÇÃO DO ALURA)
+heroku container:push web
+heroku container:release web
+(ABRIR APLICAÇAO)
+heroku open
+
+
+ATUALIZAR
+heroku container:push web
+heroku container:release web
