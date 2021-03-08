@@ -4,6 +4,7 @@ import br.com.estudo.forum.config.security.TokenService;
 import br.com.estudo.forum.controller.dto.TokenDto;
 import br.com.estudo.forum.controller.form.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+//funcionar em dois profiles
+@Profile( value = {"prod", "test"})
 public class AutenticacaoController {
 
     //tive que sobrescrever metodo no SecurityConfig para funcionar a injeção de dependencia
