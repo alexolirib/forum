@@ -1,0 +1,13 @@
+build para fazer deploy
+-> lsmvn clean package
+para rodar em produção
+java -jar -Dspring.profiles.active=prod forum.jar
+
+
+Rodar o docker
+(fazendo build do Dockerfile)
+docker build -t estudo/forum .
+
+docker image list
+ - Para rodar o container
+docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE='prod' -e FORUM_DATABASE_URL='jdbc:h2:mem:estudo-forum-prod' -e FORUM_DATABASE_USERNAME='sa' -e FORUM_DATABASE_PASSWORD='' -e FORUM_JWT_SECRET='123456' estudo/forum

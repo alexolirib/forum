@@ -13,6 +13,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>forum</name>
 	<description>Demo project for Spring Boot</description>
+<!--	tirar o padrão para gerar um jar no build e ser war-->
+<!--	<packaging>war</packaging>-->
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -71,6 +73,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+<!--		se for gerar um war-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--&lt;!&ndash;			esse scope é para quando for gerar o build não incluir o tomcat, pois será provida no próprio servidor&ndash;&gt;-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
 <!--		para monitoramento-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -97,6 +106,8 @@
 
 
 	<build>
+<!--		PARA O NOME DO ARQUIVO JAR QUANDO FOR FEITO BUILD-->
+		<finalName>forum</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
